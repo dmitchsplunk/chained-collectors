@@ -4,7 +4,7 @@ splunkObservability:
   accessToken: "<token>"
   metricsEnabled: true
   tracesEnabled: true
-  logsEnabled: true
+  logsEnabled: false
   profilingEnabled: true
 logsEngine: "otel"
 cloudProvider: "aws"
@@ -27,3 +27,4 @@ agent:
         logs:
           exporters:
             - otlp/upstream-logs
+            - splunk_hec/o11y
