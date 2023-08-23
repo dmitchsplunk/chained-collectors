@@ -6,6 +6,9 @@ splunkObservability:
   tracesEnabled: true
   logsEnabled: false
   profilingEnabled: true
+splunkPlatform:
+  endpoint: "https://<HEC URL>:<HEC PORT>/services/collector"
+  token: "<HEC token>"
 logsEngine: "otel"
 cloudProvider: "aws"
 autodetect:
@@ -28,3 +31,4 @@ agent:
           exporters:
             - otlp/upstream-logs
             - splunk_hec/o11y
+            - splunk_hec/platform_logs
