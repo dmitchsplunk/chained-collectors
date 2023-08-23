@@ -2,7 +2,7 @@
 
 This example shows how to deploy two OpenTelemetry collectors in a Kubernetes environment. The first collector is the Splunk distribution of the OpenTelemetry collector, and it's deployed via Helm as a Daemonset. It receives metrics, traces, and logs, and includes various processors. It exports traces and metrics to Splunk Observability Cloud, and exports logs to the second collector. 
 
-The second collector is referred to as the "upstream" collector, as it uses the OpenTelemetry Collector Helm Chart <https://opentelemetry.io/docs/kubernetes/helm/collector/> rather than the Splunk distribution. This collector receives logs and exports them to AWS CloudWatch Logs.  The second collector is necessary to export logs to CloudWatch, since the Splunk distribution doesn't include this exporter. 
+The second collector is referred to as the "upstream" collector, as it uses the OpenTelemetry Collector Helm Chart <https://opentelemetry.io/docs/kubernetes/helm/collector/> rather than the Splunk distribution. It's deployed as a daemonset. It receives logs and exports them to AWS CloudWatch Logs.  The second collector is necessary to export logs to CloudWatch, since the Splunk distribution doesn't include this exporter. 
 
 To deploy this example: 
 
