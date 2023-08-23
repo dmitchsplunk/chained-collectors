@@ -1,0 +1,10 @@
+# kubectl apply -f configmap.yaml
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: otel-configmap
+data:
+  CLOUDWATCH_LOG_GROUP_NAME: "<log group name>"
+  CLOUDWATCH_LOG_STREAM_NAME: "<log stream name>"
+  CLOUDWATCH_REGION: "us-west-1"

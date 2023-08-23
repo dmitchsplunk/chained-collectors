@@ -1,0 +1,63 @@
+mode: deployment
+
+ports:
+  jaeger-compact:
+    enabled: false
+  jaeger-thrift:
+    enabled: false
+  jaeger-grpc:
+    enabled: false
+  zipkin:
+    enabled: false
+  metrics:
+    enabled: false
+
+extraEnvs:
+  - name: AWS_ACCESS_KEY_ID
+    valueFrom:
+      secretKeyRef:
+        name: otel-secret
+        key: AWS_ACCESS_KEY_ID
+  - name: AWS_SECRET_ACCESS_KEY
+    valueFrom:
+      secretKeyRef:
+        name: otel-secret
+        key: AWS_SECRET_ACCESS_KEY
+  - name: AWS_SESSION_TOKEN
+    valueFrom:
+      secretKeyRef:
+        name: otel-secret
+        key: AWS_SESSION_TOKEN
+  - name: CLOUDWATCH_LOG_GROUP_NAME
+    valueFrom:
+      configMapKeyRef:
+        name: otel-configmap
+        key: CLOUDWATCH_LOG_GROUP_NAME
+  - name: CLOUDWATCH_LOG_STREAM_NAME
+    valueFrom:
+      configMapKeyRef:
+        name: otel-configmap
+        key: CLOUDWATCH_LOG_STREAM_NAME
+  - name: CLOUDWATCH_REGION
+    valueFrom:
+      configMapKeyRef:
+        name: otel-configmap
+        key: CLOUDWATCH_REGION
+
+config:
+  receivers:
+    jaeger: null
+    prometheus: null
+    zipkin: null
+  exporters:
+    awscloudwatchlogs:
+      log_group_name: "${CLOUDWATCH_LOG_GROUP_NAME}"
+      log_stream_name: "${CLOUDWATCH_LOG_STREAM_NAME}"
+      region: "${CLOUDWATCH_REGION}"
+  service:
+    pipelines:
+      traces: null
+      metrics: null
+      logs:
+        exporters:
+          - awscloudwatchlogs

@@ -1,0 +1,29 @@
+clusterName: "minikube"
+splunkObservability:
+  realm: "us1"
+  accessToken: "<token>"
+  metricsEnabled: true
+  tracesEnabled: true
+  logsEnabled: true
+  profilingEnabled: true
+logsEngine: "otel"
+cloudProvider: "aws"
+autodetect:
+  prometheus: true
+  istio: true
+agent:
+  # OpenTelemetry Collector configuration for otel-agent daemonset can be overriden in this field.
+  # Default configuration defined in templates/config/_otel-agent.tpl
+  # Any additional fields will be merged into the defaults,
+  # existing fields can be disabled by setting them to null value.
+  config:
+    exporters:
+      otlp/upstream-logs:
+        endpoint: upstream-opentelemetry-collector:4317
+        tls:
+          insecure: true
+    service:
+      pipelines:
+        logs:
+          exporters:
+            - otlp/upstream-logs
